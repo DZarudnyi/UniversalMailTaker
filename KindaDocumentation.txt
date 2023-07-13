@@ -1,0 +1,4 @@
+DataBaseWriter
+-connectionServer у класі DataBaseWriter має відповідати значенню name з конфігу connectionStrings
+-Використання output в sql-запиті можливо лише на таблиці без тригерів. При спробі використати це на таблиці з тригерами буде повертати помилку. 
+-Щодо використання SqlConnection, ось вичерпна інформація щодо відкриття нових конекшонів при кожному новому записі: https://stackoverflow.com/questions/27692050/best-practice-for-reusing-sqlconnection

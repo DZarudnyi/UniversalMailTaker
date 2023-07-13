@@ -1,0 +1,12 @@
+D:\C#\UniversalMailTaker\bin\Debug\UniversalMailTaker.exe.config
+D:\C#\UniversalMailTaker\bin\Debug\UniversalMailTaker.exe
+D:\C#\UniversalMailTaker\bin\Debug\UniversalMailTaker.pdb
+D:\C#\UniversalMailTaker\bin\Debug\Microsoft.Exchange.WebServices.dll
+D:\C#\UniversalMailTaker\bin\Debug\Microsoft.Exchange.WebServices.xml
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.csprojAssemblyReference.cache
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.Properties.Resources.resources
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.csproj.GenerateResource.cache
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.csproj.CoreCompileInputs.cache
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.csproj.CopyComplete
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.exe
+D:\C#\UniversalMailTaker\obj\Debug\UniversalMailTaker.pdb
