@@ -12,21 +12,15 @@ namespace UniversalMailTaker
         private readonly bool getBackID = false;
         private readonly string connectionServer;
 
-        public DataBaseWriter(string destinationTable, string[] tableColumns, string connectionServer)
+        public DataBaseWriter(string destinationTable, string[] tableColumns, string connectionServer, bool getBackID = false)
         {
             this.destinationTable = destinationTable;
             this.tableColumns = tableColumns;
             this.connectionServer = connectionServer;
-        }
-
-        public DataBaseWriter(string destinationTable, string[] tableColumns, bool getBackID, string connectionServer)
-        {
-            this.destinationTable = destinationTable;
-            this.tableColumns = tableColumns;
             this.getBackID = getBackID;
-            this.connectionServer = connectionServer;
         }
 
+        //TODO: look up how to to this in bulk copy, to write everything at once
         public int WriteToDataBase(string[] passingValues)
         {
             int returnedID = 0;

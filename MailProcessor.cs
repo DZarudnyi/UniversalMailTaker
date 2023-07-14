@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using Microsoft.Exchange.WebServices.Data;
 
@@ -9,14 +8,43 @@ namespace UniversalMailTaker
     {
         private readonly Logger log;
         private readonly ExchangeService service;
-        private string[] valuesFromMessage;
-        private EmailMessage message;
+        private readonly string[] fieldsToRetrieve;
+        private readonly DataBaseWriter dbWriter;
+        private readonly string attachmentSavingAddress;
+        private readonly string executionLink;
 
-        public MailProcessor(ExchangeService service, Logger log)
+        private EmailMessage message;
+        private string[] valuesFromMessage;
+
+        public MailProcessor(ExchangeService service, Logger log, string[] fieldsToRetrieve = null, DataBaseWriter dbWriter = null, string attachmentSavingAddress = null, string executionLink = null)
         {
             this.service = service;
             this.log = log;
+            this.fieldsToRetrieve = fieldsToRetrieve;
+            this.dbWriter = dbWriter;
+            this.attachmentSavingAddress = attachmentSavingAddress;
+            this.executionLink = executionLink;
             TakeEmailMessage();
+        }
+
+        public void ProcessMailBox()
+        {
+            int returnedID;
+            while (message != null)
+            {
+                //TODO: need to add check for attachment?
+                if (attachmentSavingAddress != null)
+                    TakeAttachment();
+                if (fieldsToRetrieve != null)
+                {
+                    ProcessMessage(fieldsToRetrieve);
+                    returnedID = SaveMessageData();
+                    if (executionLink != null)
+                        ExecuteLink(executionLink, returnedID.ToString());
+                }
+                
+                ToNextMessage();
+            }
         }
 
         //TODO: need to add some sort of check for message to have stop condition
@@ -58,28 +86,27 @@ namespace UniversalMailTaker
             }
         }
 
-        public void ToNextMessage()
+        private void ToNextMessage()
         {
             //Delete prev letter and get new one
             DeleteMessage(message);
             TakeEmailMessage();
         }
 
-        public void ProcessMessage(string[] fieldsToRetrieve)
+        private void ProcessMessage(string[] fieldsToRetrieve)
         {
-            //Parse the taken letter and extract data from it
+            //Parse the taken message and extract data from it
             MailParser parser = new MailParser(log);
             //TODO: check if valuesFromMessage array needs to be redeclared using "new" for correct work
             valuesFromMessage = parser.ParseMessage(message, fieldsToRetrieve);
         }
 
-        public int SaveMessageData()
+        private int SaveMessageData()
         {
-            DataBaseWriter writer = new DataBaseWriter();
-            return writer.WriteToDataBase(valuesFromMessage);
+            return dbWriter.WriteToDataBase(valuesFromMessage);
         }
 
-        public void TakeAttachment()
+        private void TakeAttachment()
         {
             //method for taking the message attachments
         }
@@ -105,18 +132,14 @@ namespace UniversalMailTaker
             return outroList;
         }
 
-        private string ReplaceQuotes(ref string text)
-        {
-            if (text == null)
-                return "";
-            else
-                return text.Replace("'", "''");
-        }
-
-        public void ExecuteLink(string link, string placingValue)
+        //TODO: Create LinkExecutioner class/intefrace, which will be a parent class to all the possible implementations of this method
+        //Like, if the link needs an ID, or it should be simply executed, i.e. JDELinkExecute, SocarLinkExecute etc.
+        private void ExecuteLink(string link, string placingValue)
         {
             var client = new WebClient();
-            var content = client.DownloadString(String.Format(link, placingValue));
+            //TODO: check the next (commented) line, it doesn`t seems like it will format correctly; it may be nicer approach
+            //var content = client.DownloadString(String.Format(link, placingValue));
+            var content = client.DownloadString(link + placingValue);
             log.WriteLine("Send mail link is executed. Result: " + content);
         }
 

@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
+    <Compile Include="DataBaseColumnInfo.cs" />
+    <Compile Include="DataBaseTableReader.cs" />
+    <Compile Include="DataBaseWriter.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IDataBaseSaver.cs" />
     <Compile Include="JDEMailTaker.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MailParser.cs" />
-    <Compile Include="MailTaker.cs" />
+    <Compile Include="MailProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
