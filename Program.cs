@@ -6,24 +6,16 @@ namespace UniversalMailTaker
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
             //TODO: Decide whether to create log here, or make a new logger each time inside MailProcessor
             Logger log = new Logger(String.Format("UniversalMailTaker_log_{0}", DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")), @"D:\logs\UniversalMailTaker");
 
             ExchangeService service;
-            DataBaseWriter dbWriter;
+            DataBaseWriter dbWriter = null;
             string attachmentSavingAddress;
-            string executionLink = "";
+            string executionLink;
 
-            
-            //while (mailProcessor is)
-            //maybe it`s better to pass only ID from DB to functions, while they can take the data by themselves, so i don`t need to create global parameters
-
-            //TODO: in one record create DataBaseWriter object and MailProcessor and pass to latter the first one
-            //Recreate DataBaseWriter for each new record; potentially use one object, just assign new value to it
 
             DataTable dataTable = new DataTable();
             DataBaseTableReader.ReadTable(dataTable);
@@ -37,6 +29,7 @@ namespace UniversalMailTaker
                 //we recreate array each time because of the size of the array - it will be different every time
                 string[] fieldsToRetrieve = DelimitByComma(r["retrievingFields"].ToString());
                 attachmentSavingAddress = r["saveAttachmentTo"].ToString();
+                //TODO: check if next line assigns "" to string if empty
                 executionLink = r["linkToExecute"].ToString();
 
                 if (fieldsToRetrieve != null)
@@ -51,21 +44,25 @@ namespace UniversalMailTaker
             }
         }
 
-        //TODO: finish this method for array
+        //TODO: finish this method for array and check correctness
         private static string[] DelimitByComma(string introString)
         {
-            string[] outroList = new string[];
+            string[] outroList = new string[introString.CountAllOccurances(',') + 1];
             string workingString = introString;
+            int pos = 0;
+
             while (workingString.Length > 0)
             {
                 if (workingString.Contains(","))
                 {
-                    outroList.Add(workingString.Substring(0, workingString.IndexOf(",")));
+                    outroList[pos] = workingString.Substring(0, workingString.IndexOf(","));
+                    //outroList.Add(workingString.Substring(0, workingString.IndexOf(",")));
                     workingString = workingString.Remove(0, workingString.IndexOf(",") + 1).Trim();
                 }
                 else
                 {
-                    outroList.Add(workingString);
+                    outroList[pos] = workingString;
+                    //outroList.Add(workingString);
                     workingString = "";
                 }
             }
