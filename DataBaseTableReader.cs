@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniversalMailTaker
 {
     class DataBaseTableReader
     {
+        //TODO: finish this query based on the final tables
         private const string getTableQuery =
                 "SELECT FIELDS " +
                 "FROM MY_TABLE " +

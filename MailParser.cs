@@ -80,8 +80,7 @@ namespace UniversalMailTaker
         {
             try
             {
-                string processedText;
-                processedText = mailBody.Substring(mailBody.IndexOf(startPoint));
+                string processedText = mailBody.Substring(mailBody.IndexOf(startPoint));
                 if (processedText.IndexOf("\n") > 0)
                     processedText = processedText.Remove(processedText.IndexOf("\n"));
                 if (processedText.IndexOf("\r") > 0)
@@ -102,13 +101,13 @@ namespace UniversalMailTaker
             }
         }
 
-        public string TakeLineBetweenTags(string MailBody, string StartTag, string EndTag)
+        public string TakeLineBetweenTags(string mailBody, string startTag, string endTag)
         {
-            string Var;
-            Var = MailBody.Substring(MailBody.IndexOf(StartTag) + StartTag.Length);
-            Var = Var.Remove(Var.IndexOf(EndTag));
-            Var = Var.Replace("\r\n", " ");
-            return Var;
+            string resultingLine;
+            resultingLine = mailBody.Substring(mailBody.IndexOf(startTag) + startTag.Length);
+            resultingLine = resultingLine.Remove(resultingLine.IndexOf(endTag));
+            resultingLine = resultingLine.Replace("\r\n", " ");
+            return resultingLine;
         }
 
         private string TakePhone(string MailBody, string phoneTag)

@@ -39,6 +39,7 @@ namespace UniversalMailTaker
                 {
                     ProcessMessage(fieldsToRetrieve);
                     returnedID = SaveMessageData();
+                    //TODO: Come up with a way to execute link without other tasks; think of ways to execute link, because i don`t always need to add id
                     if (executionLink != null)
                         ExecuteLink(executionLink, returnedID.ToString());
                 }

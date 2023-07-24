@@ -34,7 +34,7 @@ namespace UniversalMailTaker
                 if (connection.State != ConnectionState.Open)
                     connection.Open();
 
-                //Перевірити що повертає int, date/time
+                //if nvarchar(max) - returns (-1), if int/datetime - return nothing
                 columnLength = (int) cmd.ExecuteScalar();
             }
             if (columnLength <= 0)

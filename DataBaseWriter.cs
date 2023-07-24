@@ -21,6 +21,7 @@ namespace UniversalMailTaker
         }
 
         //TODO: look up how to to this in bulk copy, to write everything at once
+        //in case if getBackID = false, can add everything to bulk copy and write in one piece
         public int WriteToDataBase(string[] passingValues)
         {
             int returnedID = 0;
@@ -147,37 +148,6 @@ namespace UniversalMailTaker
                 {
                     DataBaseColumnInfo dbColumnInfo = new DataBaseColumnInfo(sqlCon, destinationTable);
 
-                    if (sqlCon.State != ConnectionState.Open)
-                        sqlCon.Open();
-                    if (getBackID)
-                        returnedID = (int)cmd.ExecuteScalar();
-                    else
-                        cmd.ExecuteNonQuery();
-                }
-            }
-
-            return returnedID;
-        }
-
-        //Obsolete command, it is here only for demonstration pusposes
-        private int CmdExecute(string queryTable, List<string> tableColumns, List<string> passingValues, bool getBackID)
-        {
-            int returnedID = 0;
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["connection2"].ConnectionString))
-            {
-                string fullCommand = "set dateformat dmy insert into [dbo].[" + queryTable + "](";
-                for (int i = 0; i < tableColumns.Count; i++)
-                    fullCommand += "[" + tableColumns[i] + "],";
-                if (getBackID)
-                    fullCommand = fullCommand.Remove(fullCommand.Length - 1, 1).Insert(fullCommand.Length - 1, ") output INSERTED.ID values(");//statement "output" cannot be used with tables that have triggers
-                else
-                    fullCommand = fullCommand.Remove(fullCommand.Length - 1, 1).Insert(fullCommand.Length - 1, ") values(");
-                for (int i = 0; i < passingValues.Count; i++)
-                    fullCommand += "'" + passingValues[i] + "',";
-                fullCommand = fullCommand.Remove(fullCommand.Length - 1, 1).Insert(fullCommand.Length - 1, ")");
-
-                using (SqlCommand cmd = new SqlCommand(fullCommand, sqlCon))
-                {
                     if (sqlCon.State != ConnectionState.Open)
                         sqlCon.Open();
                     if (getBackID)
