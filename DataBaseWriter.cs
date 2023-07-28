@@ -10,13 +10,13 @@ namespace UniversalMailTaker
         private readonly string destinationTable;
         private readonly string[] tableColumns;
         private readonly bool getBackID = false;
-        private readonly string connectionServer;
+        private readonly string connectionTo;
 
-        public DataBaseWriter(string destinationTable, string[] tableColumns, string connectionServer, bool getBackID = false)
+        public DataBaseWriter(string destinationTable, string[] tableColumns, string connectionTo, bool getBackID = false)
         {
             this.destinationTable = destinationTable;
             this.tableColumns = tableColumns;
-            this.connectionServer = connectionServer;
+            this.connectionTo = connectionTo;
             this.getBackID = getBackID;
         }
 
@@ -26,7 +26,7 @@ namespace UniversalMailTaker
         {
             int returnedID = 0;
 
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionServer].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionTo].ConnectionString))
             {
                 string fullCommand = "set dateformat dmy insert into [dbo].[" + destinationTable + "](";
                 string commandSecondPart;
@@ -75,7 +75,7 @@ namespace UniversalMailTaker
         {
             int returnedID = 0;
 
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionServer].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionTo].ConnectionString))
             {
                 string fullCommand = "set dateformat dmy insert into [dbo].[" + destinationTable + "](";
                 string commandSecondPart;
@@ -124,7 +124,7 @@ namespace UniversalMailTaker
         {
             int returnedID = 0;
 
-            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionServer].ConnectionString))
+            using (SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionTo].ConnectionString))
             {
                 string fullCommand = "set dateformat dmy insert into [dbo].[" + destinationTable + "](";
                 string commandSecondPart;

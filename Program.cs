@@ -21,23 +21,26 @@ namespace UniversalMailTaker
             DataBaseTableReader.ReadTable(dataTable);
             foreach (DataRow r in dataTable.Select())
             {
-                //TODO: work on table columns names
-                service = Authenticator.Authenticate(r["mailUserName"].ToString(), 
-                                                     r["mailPass"].ToString(), 
-                                                     r["domain"].ToString(), 
-                                                     r["url"].ToString());
+                service = Authenticator.Authenticate(r["EMailLogin"].ToString(), 
+                                                     r["EMailPassword"].ToString(), 
+                                                     r["Domain"].ToString(), 
+                                                     r["MailURL"].ToString());
                 //we recreate array each time because of the size of the array - it will be different every time
                 string[] fieldsToRetrieve = DelimitByComma(r["retrievingFields"].ToString());
-                attachmentSavingAddress = r["saveAttachmentTo"].ToString();
+                attachmentSavingAddress = r["AttachmentSaveAddress"].ToString();
                 //TODO: check if next line assigns "" to string if empty
-                executionLink = r["linkToExecute"].ToString();
+                executionLink = r["ExecutionLink"].ToString();
+                
+
 
                 if (fieldsToRetrieve != null)
                 {
+                    //TODO: Create table with connection variants, add foreign key
                     string[] destinationColumns = DelimitByComma(r["destinationColumns"].ToString());
+                    //TODO: ConnectionTo is always a key name from .config value
                     dbWriter = new DataBaseWriter(r["destinationTable"].ToString(), 
                                                   destinationColumns, 
-                                                  r["connectionServer"].ToString(), 
+                                                  r["ConnectionTo"].ToString(), 
                                                   executionLink == "");
                 }
                 MailProcessor mailProcessor = new MailProcessor(service, log, fieldsToRetrieve, dbWriter, attachmentSavingAddress, executionLink);

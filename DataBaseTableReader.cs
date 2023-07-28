@@ -14,9 +14,16 @@ namespace UniversalMailTaker
                 "AND TABLE_NAME = @table " +
                 "AND COLUMN_NAME = @column";
 
+        private string connectionTo;
+
+        public DataBaseTableReader(string connectionTo)
+        {
+            this.connectionTo = connectionTo;
+        }
+
         public static void ReadTable(DataTable table)
         {
-            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["con"];
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["connectionTest"];
             using (SqlConnection sqlCon = new SqlConnection(settings.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(getTableQuery, sqlCon))

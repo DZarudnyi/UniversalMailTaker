@@ -40,6 +40,7 @@ namespace UniversalMailTaker
                     ProcessMessage(fieldsToRetrieve);
                     returnedID = SaveMessageData();
                     //TODO: Come up with a way to execute link without other tasks; think of ways to execute link, because i don`t always need to add id
+                    //TODO: Create LinkExecutionClass column in table and separate table for available classes; if column is empty - execute default
                     if (executionLink != null)
                         ExecuteLink(executionLink, returnedID.ToString());
                 }
@@ -51,7 +52,7 @@ namespace UniversalMailTaker
         //TODO: need to add some sort of check for message to have stop condition
         private void TakeEmailMessage()
         {
-            SearchFilter sf = new SearchFilter.SearchFilterCollection(LogicalOperator.And, new SearchFilter.IsEqualTo(EmailMessageSchema.IsRead, false));//searching for new letters
+            SearchFilter sf = new SearchFilter.SearchFilterCollection(LogicalOperator.And, new SearchFilter.IsEqualTo(EmailMessageSchema.IsRead, false));
             ItemView view = new ItemView(20);
 
             PropertySet psPropset;
