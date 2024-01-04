@@ -1,1 +1,1 @@
-Project created to read email messages, parse them and write down to MSSQL db.
+Further advancement of [JDETakeMail](https://github.com/DZarudnyi/JDETakeMail). Designed for usage with multiple projects, so everything could be done in one place and there would be no need to copy the same code for every new project.
